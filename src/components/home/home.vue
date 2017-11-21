@@ -12,7 +12,7 @@
                         <Col span="16" style="padding-left:6px;">
                             <Row class-name="made-child-con-middle" type="flex" align="middle">
                                 <div>
-                                    <b class="card-user-infor-name">{{this.$store.state.userName}}</b>
+                                    <b class="card-user-infor-name">{{userName}}</b>
                                     <p>super admin</p>
                                 </div>
                             </Row>
@@ -21,7 +21,7 @@
                     <div class="line-gray"></div>
                     <Row class="margin-top-8">
                         <Col span="8"><p class="notwrap">当前登录时间:</p></Col>
-                        <Col span="16" class="padding-left-8">{{this.$store.state.loginTime}}</Col>
+                        <Col span="16" class="padding-left-8">{{loginTime}}</Col>
                     </Row>
                     <Row class="margin-top-8">
                         <Col span="8"><p class="notwrap">当前登录地点:</p></Col>
@@ -79,14 +79,26 @@
 </template>
 <script>
 	import infoCard from "../main_components/infoCard"
+    import Cookies from 'js-cookie'
+
 	export default{
 		components:{
 			infoCard
 		},
 		computed:{
+            userName(){
+                return Cookies.get('userName')
+            },
+            loginTime(){
+                return Cookies.get('loginTime')
+            },
             count(){
-                
-                return this.$store.state.count
+                //return Cookies.get('count')
+                /*this.$http.get('handle').then(res=>{
+                    return res.count
+                },error=>{this.$Message.error(error);});*/
+
+                return {visit: 496,insurance: 326,indepot: 243,outdepot: 395}
             }
         },
         created(){

@@ -95,11 +95,8 @@
 				'isFullScreen',
 				'pageOpenedList'
 			]),
-			avatorPath () {
-                return Cookies.get('avatorPath')
-            },
             userName(){
-            	return this.$store.state.userName
+            	return Cookies.get('userName')
             }
 		},
 		methods:{

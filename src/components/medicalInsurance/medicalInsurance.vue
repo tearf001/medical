@@ -13,7 +13,7 @@
         	        </p>
         	        <p>
         	        	单据编号：
-        	        	<span>20171110095845437361</span>
+        	        	<span>{{billNumber}}</span>
         	        </p>
         	    </Card>
                 <Card class='margin-top-15 origin-con'>
@@ -227,7 +227,9 @@
             
 		},
         computed:{
-            
+            billNumber(){
+                return 12313214561
+            },
             handlePrice(){
                 let total=0;
                 for(let good of this.meidicalAllData){

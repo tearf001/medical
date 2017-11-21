@@ -46,18 +46,16 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                    	this.$store.commit("setUserName","maofan");
-                    	this.$store.commit("setLoginTime","2016.09.12-13:32:20");
-                    	this.$store.commit('setCount',{visit: 496,insurance: 326,indepot: 243,outdepot: 395});
+                    	Cookies.set("userName","maofan");
+                    	Cookies.set('loginTime','2016.09.12-13:32:20');
 
                     	this.$router.push({ path: 'main/home'});
                     	
                     	/*this.$http.post('login',this.formInline).then(res=>{
                     			if(res.Code=='1'){
-                    				// Cookies.set('userName',res.name);
-                    				this.$store.commit(setUserName(res.Name));
-                    				this.$store.commit(setLoginTime(res.Date));
-                    				this.$store.commit('setCount',res.Count);
+                    				Cookies.set('userName',res.name);
+                    				Cookies.set('loginTime',res.Date);
+                    				
                     				this.$router.push({ path: 'main/home'});
                     			}
                     		},error=>{

@@ -13,9 +13,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state:{
         activeName:'',
-        userName:'',
-        loginTime:'',
-        count:'',
+        
         avatorImg:'http://acdtech.top/img/7.jpg',
 		menuList:[],
         // 面包屑数组
@@ -37,20 +35,6 @@ export default new Vuex.Store({
         }]
 	},
 	mutations:{
-        clearUserInfo(state){
-            state.userName='';
-            state.loginTime='';
-
-        },
-        setCount(state,count){
-            state.count=count;
-        },
-        setUserName(state,userName){
-            state.userName=userName;
-        },
-        setLoginTime(state,time){
-            state.loginTime=time;
-        },
         setActiveName(state,actName){
             state.activeName=actName;
         },
