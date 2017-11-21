@@ -1,5 +1,9 @@
 # medical
 
+> 这是一个简单的后台管理界面
+> 基于vue+vue-router+vue-resource+vuex
+> 采用了iview的UI组件，animate.css的动画效果，
+
 > A Vue.js project
 
 ## Build Setup
