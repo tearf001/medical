@@ -311,10 +311,18 @@
 				this.choiceStaff=data.staffName;
 			},
 			searchDepot(){
-				console.log('ssa')
+				this.$http.get('searchDepot',{depotNumber:this.depotNumber,depotName:this.depotName}).then(res=>{
+
+                    this.depotData.push(res);
+
+                	},error=>{this.$Message.error(error);})
 			},
 			searchStaff(){
-				console.log('bja')
+				this.$http.get('searchStaff',{staffSection:this.staffSection,staffName:this.staffName}).then(res=>{
+
+                    this.staffData.push(res);
+
+                	},error=>{this.$Message.error(error);})
 			},
 			choiceMedical(){
 				if(this.choiceName=='' || this.choiceStaff==''){
@@ -326,7 +334,11 @@
 				}
 			},
 			searchMedical(){
-				console.log('aaa')
+				this.$http.get('DurgOrder',{medicalId:this.medicalId,medicalName:this.medicalName}).then(res=>{
+
+                    this.medicalData.push(res);
+
+                	},error=>{this.$Message.error(error);})
 			},
 			deleteRowInline (index, success, fail) {
             	success(() => {
@@ -347,7 +359,15 @@
 				this.medicalArray=selection;
 			},
 			inLibrary(){
-				// this.$http.post().then()
+				this.$http.post('inLibrary',this.medicalData).then(res=>{
+					if(res.code==0){
+						this.$Message.error('药品入库失败！');
+					}else{
+						this.$Message.success('药品入库成功~');
+					}
+                    
+
+                	},error=>{this.$Message.error(error);})
 			}
 		}
 	}

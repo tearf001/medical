@@ -30,7 +30,7 @@
         		<can-edit-table refs="table2" v-model="chooseMedicalData" :height="'500'" :columns-list="chooseMedicalCol" :saveEdit="saveEditInline" :deleteRow="deleteRowInline"></can-edit-table>
         		<!-- <Table height="500" border :columns="chooseMedicalCol" :data="chooseMedicalData"></Table> -->
         		
-        		<Button size='large' class='outDopt' type="info" icon="log-out" @click='outLibrary'>药品入库</Button>
+        		<Button size='large' class='outDopt' type="info" icon="log-out" @click='outLibrary'>药品出库</Button>
         		
         		<Modal width='800' v-model="depotModal" title="选择仓库" :mask-closable="false">
         			<Row class='depot-con'>

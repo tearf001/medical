@@ -61,7 +61,7 @@
                             <Input v-model="medicalId" placeholder="请输入药品清单"></Input>
                         </Col>
                         <Col span='7' class-name="padding-left-15">
-                            <Button type="primary" icon="ios-search" @click="searchCard">搜索</Button>
+                            <Button type="primary" icon="ios-search" @click="searchDrug">搜索</Button>
                         </Col>
                     </div>
                     <div class="userInfo">
@@ -124,7 +124,7 @@
                     },
                     {
                         title: '投保人编号',
-                        key: 'card'
+                        key: 'id'
                     },
                     {
                         title: '联系电话',
@@ -140,18 +140,16 @@
                 rfidCol:[
                     {
                         title:'溯源编号',
-                        key:'rfid'
+                        key:'rfCode'
                     }
                 ],
                 rfidData:[
                     {
-                        rfid:1234564589
+                        rfCode:1234564589
                     }
                 ],
                 medicalId:'',
 
-                singlePrice:[],
-                
                 medicalCol:[
                     {
                         title:'药品编号',
@@ -253,30 +251,52 @@
 				if(this.cardId==''){
 					this.$Message.error('医保卡号不能为空');
 				}else{
-					/*this.$http.post('login',this.cardId).then(res=>{
-                    	this.data1.push(res);
+					/*this.$http.get('User',this.cardId).then(res=>{
+                    	this.userData.push(res);
                 	},error=>{
                     	this.$Message.error(error);
                 	})*/
                		let info=[{
                			name: '王麻子',
-               		    card: 18013152156,
-               		    phone: 1354724825,
-               		    date: '2016-10-03'
+               		    id: 18013152156,
+               		    phone: 1354724825
                		}];
+
                		this.userData=info;
 				}
 			},
+            searchDrug(){
+                if(this.medicalId==''){
+                    this.$Message.error('药品编号不能为空');
+                }else{
+                    /*this.$http.get('drugs',this.medicalId).then(res=>{
+                        this.meidicalAllData.push(res);
+                    },error=>{
+                        this.$Message.error(error);
+                    })*/
+                    let info={
+                        medicalId:10000000000,
+                        medicalName:'胶囊',
+                        medicalDepot:'成都仓',
+                        medicalStock:2154,
+                        medicalPrice:'156',
+                        medicalAmount:2
+                    };
+                    this.meidicalAllData.push(info);
+                    
+                }
+            },
             searchRfid(){
                 if(this.rfId==''){
                     this.$Message.error('溯源编号不能为空');
                 }else{
-                    /*this.$http.post('login',this.cardId).then(res=>{
-                        this.data1.push(res);
+                    /*this.$http.get('Rfid',this.rfId).then(res=>{
+                        this.rfidData.push(res);
                     },error=>{
                         this.$Message.error(error);
                     })*/
-                    console.log('aaa')
+                    this.rfidData.push({rfCode:123456156});
+                    //console.log('aaa')
                 }
             },
             deleteRowInline (index, success, fail) {
