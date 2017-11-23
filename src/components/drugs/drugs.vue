@@ -7,9 +7,9 @@
             </p>
             <Row class='input-col'>
             	<span class="searchTitle">药品编号</span>
-                <Input v-model="searchCriteria.drugsId" placeholder="请输入商品编号" style="width: 200px" />
+                <Input v-model="searchCriteria.drugsId" placeholder="请输入药品编号" style="width: 200px" />
                 <span class="searchTitle">药品名称</span>
-                <Input v-model="searchCriteria.drugsName" placeholder="请输入商品名称" style="width: 200px" />
+                <Input v-model="searchCriteria.drugsName" placeholder="请输入药品名称" style="width: 200px" />
                 <span class="searchTitle">拼音简码</span>
                 <Input v-model="searchCriteria.drugsCode" placeholder="请输入拼音简码" style="width: 200px" />
             </Row>
@@ -19,6 +19,7 @@
             	<span class="searchTitle">仓库名称</span>
             	<Input v-model="searchCriteria.drugsDepot" placeholder="请输入仓库名称" style="width: 200px" />
             	<Button type="primary" icon="ios-search" @click="searchDrug">搜索</Button>
+            	<Button type="success" icon="plus" @click="add=true">添加</Button>
             </Row>
             <Row class="margin-top-10 searchable-table-con1">
                 <Table height="600" size='large' border :columns="drugsCol" :data="drugsData"></Table>
@@ -63,9 +64,40 @@
             	    </TabPane>
             	</Tabs>
         	</div>
-        	
-
         	<footer slot='footer'></footer>
+    	</Modal>
+    	<Modal width='600' v-model="add" title="添加药品" :mask-closable="false" @on-cancel="cancelAdd" @on-ok="addDrug">
+        	<Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    		    <FormItem label="药品编号" prop="drugsId">
+    		        <Input v-model="formValidate.drugsId" placeholder="请输入药品编号"></Input>
+    		    </FormItem>
+    		    <FormItem label="药品名称" prop="drugsName">
+    		        <Input v-model="formValidate.drugsName" placeholder="请输入药品名称"></Input>
+    		    </FormItem>
+    		    <FormItem label="拼音简码" prop="drugsCode">
+    		        <Input v-model="formValidate.drugsCode" placeholder="请输入拼音简码"></Input>
+    		    </FormItem>
+    		    <FormItem label="净含量">
+            		<Input v-model="formValidate.drugsNet"></Input>
+        		</FormItem>
+        		<FormItem label="药品规格">
+            		<Input v-model="formValidate.drugsSpec"></Input>
+        		</FormItem>
+        		<FormItem label="药品型号">
+            		<Input v-model="formValidate.drugsModel"></Input>
+        		</FormItem>
+        		<FormItem label="药品单位">
+            		<Input v-model="formValidate.drugsUnit"></Input>
+        		</FormItem>
+        		<FormItem label="出售价格">
+            		<Input v-model="formValidate.drugsPrice"></Input>
+        		</FormItem>
+        		<FormItem label="备注" prop="desc">
+            		<Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+        		</FormItem>
+    		</Form>
+        	
+        	
     	</Modal>
 	</div>
 </template>
@@ -73,6 +105,30 @@
 	export default{
 		data(){
 			return {
+				formValidate:{
+					drugsId:'',
+					drugsName:'',
+					drugsCode:'',
+					drugsNet:'',
+					drugsSpec:'',
+					drugsModel:'',
+					drugsUnit:'',
+					drugsPrice:'',
+					desc:''
+				},
+				ruleValidate:{
+					drugsId:[
+						{required:true,message:'药品编号不能为空',trigger:'blur'},
+						{ type: 'string', message: '请输入数字', trigger: 'blur',pattern:/^[0-9]*$/ }
+					],
+					drugsName:[
+						{required:true,message:'药品名称不能为空',trigger:'blur'}
+					],
+					drugsCode:[
+						{required:true,message:'拼音简码不能为空',trigger:'blur'},
+						{type: 'string',message:'请输入字母',required: true, pattern: /^[A-Za-z]+$/}
+					]
+				},
 				drugsCol:[
 					{
 						title:'药物名称',
@@ -144,6 +200,7 @@
 						}
 					}
 				],
+				add:false,
 				details:false,
 				drug:{},
 				drugsData:[
@@ -172,19 +229,32 @@
 			}
 		},
 		methods:{
+			cancelAdd(){
+				this.formValidate={
+					drugsId:'',
+					drugsName:'',
+					drugsCode:'',
+					drugsNet:'',
+					drugsSpec:'',
+					drugsModel:'',
+					drugsUnit:'',
+					drugsPrice:'',
+					desc:''
+				}
+			},
+			addDrug(){
+				this.$http.post('addDrug',this.formValidate).then(res=>{
+					
+				},error=>{this.$Message.error(error);});
+			},
 			show (index) {
 				this.details=true;
 				this.drug=this.drugsData[index];
 
-                /*this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.drugsData[index].drugsName}<br>Id：${this.drugsData[index].drugsId}<br>Address：${this.drugsData[index].drugsDepot}`
-                })*/
-
             },
             searchDrug(){
 
-            	this.$http.post('DrugSearch',this.searchCriteria).then(res=>{
+            	this.$http.get('DrugSearch',this.searchCriteria).then(res=>{
                     return res.count
                 },error=>{this.$Message.error(error);});
 

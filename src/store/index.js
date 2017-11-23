@@ -5,7 +5,8 @@ const list=[
         {path:'drugs',title:'药品管理',children:[],icon:'icon-yaopinguanli'},
         {path:'inLibrary',title:'药品入库',children:[],icon:'icon-ruku'},
         {path:'outLibrary',title:'药品出库',children:[],icon:'icon-chuku'},
-        {path:'record',title:'医疗记录',children:[],icon:'icon-jilu-copy'}
+        {path:'record',title:'医疗记录',children:[],icon:'icon-jilu-copy'},
+        {path:'wareHouse',title:'仓库管理',children:[],icon:'icon-cangku'}
 ]
 
 Vue.use(Vuex)
@@ -14,7 +15,7 @@ export default new Vuex.Store({
 	state:{
         activeName:'',
         
-        avatorImg:'http://acdtech.top/img/7.jpg',
+        avatorImg:'../../static/head.png',
 		menuList:[],
         // 面包屑数组
 		currentPath: [

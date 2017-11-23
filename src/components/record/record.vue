@@ -18,7 +18,7 @@
             	<Input v-model="searchRecord.searchConName2" placeholder="请输入工作人员" style="width: 200px" />
             	<span class="searchTitle">记录时间</span>
 
-            	<DatePicker v-model='searchRecord.recordTime' type="date" placeholder="Select date" style="width: 200px;margin-right:15px;"></DatePicker>
+            	<DatePicker v-model='searchRecord.recordTime' type="date" placeholder="选择记录时间" style="width: 200px;margin-right:15px;"></DatePicker>
 
             	<Button type="primary" @click="recordSearch" icon="ios-search">搜索</Button>
             </Row>
@@ -235,9 +235,16 @@
 		},
 		methods:{
 			details (data) {
-                console.log(data);
+                console.log(data.labelNum);
                 this.detailsPage=true;
+                this.$http.get('recordDetails',data.labelNum).then(res=>{
+                	this.drugRecordData=res.drugRecordData;
+					this.policyHolder=res.policyHolder;
+                	this.service=res.service;
+                	this.traceRecord=res.traceRecord;
+                },error=>{this.$Message.error(error);}
 
+                	)
             },
             recordSearch(){
             	this.$http.get('recordSearch',this.searchRecord).then(res=>{
