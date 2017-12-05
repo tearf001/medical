@@ -10,6 +10,7 @@ import vueResource from 'vue-resource'
 import store from './store'
 import '@/styles/theme.less'
 import 'animate.css'
+import Cookies from 'js-cookie'
 
 Vue.use(iView)
 Vue.use(vueResource)
@@ -18,7 +19,22 @@ Vue.config.productionTip = false
 
 router.beforeEach((to,from,next)=>{
 	iView.LoadingBar.start();
-	next();
+	
+	store.commit('setTaken',Cookies.get('taken'));
+	console.log(Cookies.get('taken'));
+
+	if(to.path!=='/'){
+		if(store.state.token){
+			next();
+		}else{
+			next({ path: '/' });
+		}
+	}else{
+		next();
+	}
+	iView.LoadingBar.finish();
+	
+
 })
 router.afterEach(route=>{
 	iView.LoadingBar.finish();

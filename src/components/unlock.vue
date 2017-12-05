@@ -27,7 +27,7 @@
 </template>
 
 <script>
-
+import Cookies from 'js-cookie';
 export default {
     name: 'Unlock',
     data () {
@@ -59,10 +59,12 @@ export default {
                 this.avatorLeft = '0px';
                 this.inputLeft = '400px';
                 this.password = '';
-               
+
+                Cookies.remove('locking');
+                
                 this.$emit('on-unlock');
             } else {
-                this.$Message.error('密码错误,请重新输入。如果忘了密码，清除浏览器缓存重新登录即可，这里没有做后端验证');
+                this.$Message.error('密码错误,请重新输入。');
             }
         },
         unlockMousedown () {

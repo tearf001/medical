@@ -14,7 +14,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state:{
         activeName:'',
-        
+        token:false,
         avatorImg:'../../static/head.png',
 		menuList:[],
         // 面包屑数组
@@ -36,6 +36,9 @@ export default new Vuex.Store({
         }]
 	},
 	mutations:{
+        setTaken(state,boo){
+            state.token=boo;
+        },
         setActiveName(state,actName){
             state.activeName=actName;
         },

@@ -20,6 +20,16 @@
 	        	</FormItem>
 	    	</Form>
 		</div>
+		<div id="prop" v-show="prop">
+			<div class="spinner">
+  				<div class="rect1"></div>
+  				<div class="rect2"></div>
+  				<div class="rect3"></div>
+  				<div class="rect4"></div>
+  				<div class="rect5"></div>
+			</div>
+			<p>登录中，请稍后！</p>
+		</div>
 	</div>
 </template>
 <script type="text/javascript">
@@ -28,6 +38,7 @@
 	export default{
 		data () {
             return {
+            	prop:false,
                 formInline: {
                     Account: '',
                     Password: ''
@@ -44,25 +55,44 @@
         },
         methods: {
             handleSubmit(name) {
+
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                    	Cookies.set("userName","maofan");
-                    	Cookies.set('loginTime','2016.09.12-13:32:20');
 
-                    	this.$router.push({ path: 'main/home'});
+                    	this.$Message.success('登录成功!');
+                    	Cookies.set('taken',true);
                     	
-                    	/*this.$http.post('login',this.formInline).then(res=>{
-                    			if(res.Code=='1'){
-                    				Cookies.set('userName',res.name);
-                    				Cookies.set('loginTime',res.Date);
-                    				
+						this.$router.push({ path: 'main/home'});
+						
+                    	/*this.prop=true;
+
+                    	this.$http.post('/Account/Login',this.formInline).then(res=>{
+                    		
+                    			if(res.body.Code=='1'){
+                    				this.prop=false;
+                    				this.$Message.success('登录成功!');
+
+                    				this.$store.commit('setTaken',true);
+
+                    				Cookies.set('userName',res.body.Data.Name);
+                    				Cookies.set('loginTime',res.body.Data.Date);
+									Cookies.set('taken',true);
+
                     				this.$router.push({ path: 'main/home'});
+
+                    			}else{
+                    				this.prop=false;
+                    				this.$Message.error('登陆失败!');
+
                     			}
                     		},error=>{
-                    			this.$Message.error(error);
+                    			this.prop=false;
+                    			
+                    			this.$Message.error(error.body);
                     	})*/
                     } else {
-                        this.$Message.error('登录失败!');
+
+                        this.$Message.error('请先填写用户名和密码!');
                     }
                 })
             }
@@ -74,6 +104,47 @@
 		width:340px;
 		height:320px;
 		background:#fff;
+		#prop{
+			position: absolute;
+			top:0;
+			z-index: 999;
+			width:100%;
+			height:100%;
+			background:rgba(255,255,255,.8);
+			text-align: center;
+			p{
+				width:100%;
+				position:absolute;
+				top:200px;
+				color:#cc0033;
+				font-size:16px;
+			}
+			.spinner {
+  				margin: 130px auto;
+  				width: 50px;
+  				height: 60px;
+  				font-size: 10px;
+  				div{
+  					background-color: #cc0033;
+  					height: 100%;
+  					width: 6px;
+  					display: inline-block;
+  					animation: stretchdelay 1.2s infinite ease-in-out;
+  				}
+  				.rect2 {
+  					animation-delay: -1.1s;
+				}
+				.rect3 {
+  					animation-delay: -1.0s;
+				}
+				.rect4 {
+  					animation-delay: -0.9s;
+				}
+				.rect5 {
+  					animation-delay: -0.8s;
+				}
+			}
+		}
 		.title{
 			color: #cc0033;
 			font-size: 24px;
@@ -95,5 +166,12 @@
 				background:#cc0066;
 			}
 		}
+	}
+	@keyframes stretchdelay {
+		0%, 40%, 100% {
+    		transform: scaleY(0.4);  
+  		}  20% {
+    		transform: scaleY(1.0);
+  		}
 	}
 </style>

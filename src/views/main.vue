@@ -114,6 +114,7 @@
 				this.hideMenuText = !this.hideMenuText
 			},
 			lockScreen () {
+
                 let lockScreenBack = document.getElementById('lock_screen_back');
                 lockScreenBack.style.transition = 'all 3s';
                 lockScreenBack.style.zIndex = 10000;
@@ -133,6 +134,7 @@
             handleClickUserDropdown () {
             	Cookies.remove('userName');
             	Cookies.remove('avatorPath');
+                Cookies.remove('taken');
                 this.$router.push({
                         name: 'login'
                 });
